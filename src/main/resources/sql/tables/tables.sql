@@ -12,6 +12,8 @@ CREATE TABLE token(
                       id SERIAL,
                       token VARCHAR(200),
                       expiryDate DATE,
+                      userid INT NOT NULL,
+                      FOREIGN KEY (userid) REFERENCES Users(userid),
                       PRIMARY KEY(id)
 );
 
