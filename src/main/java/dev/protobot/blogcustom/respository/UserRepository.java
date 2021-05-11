@@ -45,7 +45,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
             "UPDATE Users SET " +
                     "enable = :enable " +
                     "WHERE userid = :userid " +
-                    "RETURNING NULL ;";
+                    "RETURNING * ;";
     @Query(value = queryUpdateEnableUser, nativeQuery = true)
     User updateEnableUser(
             @Param("userid") Long userid,
@@ -60,7 +60,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
             @Param("username") String username);
 
     String queryFindById =
-            "SELECT * FROM users" +
+            "SELECT * FROM users " +
                     "WHERE userid = :userid ;";
     @Query(value = queryFindById, nativeQuery = true)
     Optional<User> findUserById(

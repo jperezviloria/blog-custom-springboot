@@ -45,16 +45,15 @@ public class AuthServiceImplementation implements AuthService {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setCreated(Instant.now());
         user.setEnable(false);
-        System.out.println(user);
-        userRepository.createUser(
+        User userCreated = userRepository.createUser(
                 user.getUsername(),
                 user.getPassword(),
                 user.getEmail(),
                 user.getCreated(),
                 user.isEnable());
-
+        System.out.println(userCreated);
 //        generateVerificationToken(user);
-        String token = generateVerificationToken(user);
+        String token = generateVerificationToken(userCreated);
         mailServiceImplementation.sendMail(new NotificationEmail("Please Activate your Account",
                 user.getEmail(), "Thanks you for signin up to Spring Reddit," +
                 " please click on the below url to activate your account : " +
