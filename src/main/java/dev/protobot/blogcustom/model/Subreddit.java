@@ -1,10 +1,17 @@
 package dev.protobot.blogcustom.model;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.List;
 
 @Entity
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Subreddit {
 
     @Id
@@ -22,6 +29,7 @@ public class Subreddit {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    /*
     public Subreddit(){}
 
     public Subreddit(Long id, String name, String description, List<Post> posts, Instant createdDate, User user) {
@@ -40,4 +48,8 @@ public class Subreddit {
         this.createdDate = createdDate;
         this.user = user;
     }
+
+
+     */
+
 }

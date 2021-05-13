@@ -1,14 +1,21 @@
 package dev.protobot.blogcustom.service.implementation;
 
+import dev.protobot.blogcustom.dto.request.LoginRequest;
 import dev.protobot.blogcustom.dto.request.RegisterRequest;
+import dev.protobot.blogcustom.dto.response.AuthenticationResponse;
 import dev.protobot.blogcustom.exceptions.SpringRedditException;
 import dev.protobot.blogcustom.model.NotificationEmail;
 import dev.protobot.blogcustom.model.User;
 import dev.protobot.blogcustom.model.VerificationToken;
 import dev.protobot.blogcustom.respository.UserRepository;
 import dev.protobot.blogcustom.respository.VerificationTokenRepository;
+import dev.protobot.blogcustom.security.JwtProvider;
 import dev.protobot.blogcustom.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,16 +31,22 @@ public class AuthServiceImplementation implements AuthService {
     private final UserRepository userRepository;
     private final VerificationTokenRepository verificationTokenRepository;
     private final MailServiceImplementation mailServiceImplementation;
+    private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
 
     @Autowired
     public AuthServiceImplementation(PasswordEncoder passwordEncoder,
                                      UserRepository userRepository,
                                      VerificationTokenRepository verificationTokenRepository,
-                                     MailServiceImplementation mailServiceImplementation){
+                                     MailServiceImplementation mailServiceImplementation,
+                                     AuthenticationManager authenticationManager,
+                                     JwtProvider jwtProvider){
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.verificationTokenRepository = verificationTokenRepository;
         this.mailServiceImplementation = mailServiceImplementation;
+        this.authenticationManager = authenticationManager;
+        this.jwtProvider = jwtProvider;
     }
 
     @Override
@@ -91,5 +104,14 @@ public class AuthServiceImplementation implements AuthService {
 
         user.setEnable(true);
         userRepository.updateEnableUser(user.getUserId(), user.isEnable());
+    }
+
+    public AuthenticationResponse login(LoginRequest loginRequest) {
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginRequest.getUsername(),
+                loginRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authenticate);
+        String token = jwtProvider.generateToken(authenticate);
+        return new AuthenticationResponse(token, loginRequest.getUsername());
     }
 }

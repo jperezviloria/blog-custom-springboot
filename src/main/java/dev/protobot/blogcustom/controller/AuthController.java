@@ -1,6 +1,8 @@
 package dev.protobot.blogcustom.controller;
 
+import dev.protobot.blogcustom.dto.request.LoginRequest;
 import dev.protobot.blogcustom.dto.request.RegisterRequest;
+import dev.protobot.blogcustom.dto.response.AuthenticationResponse;
 import dev.protobot.blogcustom.dto.response.RestResponse;
 import dev.protobot.blogcustom.service.implementation.AuthServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +32,15 @@ public class AuthController {
         return new RestResponse<>(HttpStatus.OK, "Account Activate Successfully");
 
     }
+
+    @PostMapping("/login")
+    public RestResponse<AuthenticationResponse> login (@RequestBody LoginRequest loginRequest){
+
+        AuthenticationResponse authenticationResponse = authServiceImplementation.login(loginRequest);
+        System.out.println(authenticationResponse);
+        return new RestResponse<>(HttpStatus.OK, authenticationResponse);
+
+    }
+
 
 }

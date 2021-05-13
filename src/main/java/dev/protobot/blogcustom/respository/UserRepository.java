@@ -53,8 +53,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
 
     String queryFindByUsername =
-            "SELECT * FROM users" +
-                    "WHERE username = :username ;";
+            "SELECT * FROM users WHERE username = :username ;";
     @Query(value = queryFindByUsername, nativeQuery = true)
     Optional<User> findByUsername(
             @Param("username") String username);
