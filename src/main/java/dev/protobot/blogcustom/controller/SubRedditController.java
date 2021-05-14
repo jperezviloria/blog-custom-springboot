@@ -1,8 +1,7 @@
 package dev.protobot.blogcustom.controller;
 
-import dev.protobot.blogcustom.dto.request.SubRedditRequest;
+import dev.protobot.blogcustom.dto.SubredditDto;
 import dev.protobot.blogcustom.dto.response.RestResponse;
-import dev.protobot.blogcustom.model.Subreddit;
 import dev.protobot.blogcustom.service.implementation.SubRedditServiceImplementation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +24,29 @@ public class SubRedditController {
 
 
     @PostMapping("/save")
-    public RestResponse<SubRedditRequest> saveSubredditDto(@RequestBody SubRedditRequest subRedditRequest){
-        SubRedditRequest subRedditRequestResponse = subRedditServiceImplementation.saveSubredditDto(subRedditRequest);
-        return new RestResponse<>(HttpStatus.OK, subRedditRequestResponse);
+    public RestResponse<SubredditDto> saveSubredditDto(@RequestBody SubredditDto subredditDto){
+        SubredditDto subredditDtoResponse = subRedditServiceImplementation.saveSubredditDto(subredditDto);
+        return new RestResponse<>(HttpStatus.OK, subredditDtoResponse);
     }
 
     @GetMapping("/getall")
-    public RestResponse<List<SubRedditRequest>> getAllSubredditDto(){
-        List<SubRedditRequest> allSubredditDto = subRedditServiceImplementation.getAllSubredditDto();
+    public RestResponse<List<SubredditDto>> getAllSubredditDto(){
+        List<SubredditDto> allSubredditDto = subRedditServiceImplementation.getAllSubredditDto();
+        return new RestResponse<>(HttpStatus.OK, allSubredditDto);
+    }
+
+    //-------------------------------------------------------
+
+
+    @PostMapping("/save/2")
+    public RestResponse<SubredditDto> saveSubreddit(@RequestBody SubredditDto subredditDto){
+        SubredditDto subredditDtoResponse = subRedditServiceImplementation.saveSubredditDto(subredditDto);
+        return new RestResponse<>(HttpStatus.OK, subredditDtoResponse);
+    }
+
+    @GetMapping("/getall/2")
+    public RestResponse<List<SubredditDto>> getAllSubreddit(){
+        List<SubredditDto> allSubredditDto = subRedditServiceImplementation.getAllSubredditDto();
         return new RestResponse<>(HttpStatus.OK, allSubredditDto);
     }
 

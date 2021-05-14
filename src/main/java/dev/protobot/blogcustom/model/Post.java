@@ -1,10 +1,19 @@
 package dev.protobot.blogcustom.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Post {
 
     @Id
@@ -16,7 +25,7 @@ public class Post {
 
     private String description;
 
-    private Integer voteCount;
+    private Integer voteCount = 0;
 
     //Join referenced column -> userid
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,26 +39,4 @@ public class Post {
     @JoinColumn(name = "id" , referencedColumnName = "id")
     private Subreddit subreddit;
 
-    public Post(){}
-
-    public Post(Long postId, String postName, String url, String description, Integer voteCount, User user, Instant createdDate, Subreddit subreddit) {
-        this.postId = postId;
-        this.postName = postName;
-        this.url = url;
-        this.description = description;
-        this.voteCount = voteCount;
-        this.user = user;
-        this.createdDate = createdDate;
-        this.subreddit = subreddit;
-    }
-
-    public Post(String postName, String url, String description, Integer voteCount, User user, Instant createdDate, Subreddit subreddit) {
-        this.postName = postName;
-        this.url = url;
-        this.description = description;
-        this.voteCount = voteCount;
-        this.user = user;
-        this.createdDate = createdDate;
-        this.subreddit = subreddit;
-    }
 }

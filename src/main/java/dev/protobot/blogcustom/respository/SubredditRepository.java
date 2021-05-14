@@ -1,17 +1,16 @@
 package dev.protobot.blogcustom.respository;
 
-import dev.protobot.blogcustom.dto.request.SubRedditRequest;
+import dev.protobot.blogcustom.dto.SubredditDto;
 import dev.protobot.blogcustom.model.Subreddit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.Instant;
 import java.util.List;
 
 @Repository
-public interface SubredditRepository extends JpaRepository<SubRedditRequest,Long> {
+public interface SubredditRepository extends JpaRepository<SubredditDto,Long> {
 
 
 
@@ -20,7 +19,7 @@ public interface SubredditRepository extends JpaRepository<SubRedditRequest,Long
             "INSERT INTO SubredditDto (name, description) " +
                     "VALUES( :name, :description) RETURNING *;";
     @Query(value = querySaveSubredditDto, nativeQuery = true)
-    SubRedditRequest saveSubredditDto(
+    SubredditDto saveSubredditDto(
             @Param("name") String username,
             @Param("description") String password
     );
@@ -29,5 +28,22 @@ public interface SubredditRepository extends JpaRepository<SubRedditRequest,Long
     String queryGetAllSubredditDto =
             "SELECT * FROM SubredditDto ;";
     @Query(value = queryGetAllSubredditDto, nativeQuery = true)
-    List<SubRedditRequest> getAllSubredditDto();
+    List<SubredditDto> getAllSubredditDto();
+
+    //-------------------------------------------------------------------------
+
+    String querySaveSubreddit =
+            "INSERT INTO Subreddit2 (name, description) " +
+                    "VALUES( :name, :description) RETURNING *;";
+    @Query(value = querySaveSubreddit, nativeQuery = true)
+    Subreddit saveSubreddit(
+            @Param("name") String username,
+            @Param("description") String password
+    );
+
+
+    String queryGetAllSubreddit =
+            "SELECT * FROM Subreddit2 ;";
+    @Query(value = queryGetAllSubreddit, nativeQuery = true)
+    List<Subreddit> getAllSubreddit();
 }

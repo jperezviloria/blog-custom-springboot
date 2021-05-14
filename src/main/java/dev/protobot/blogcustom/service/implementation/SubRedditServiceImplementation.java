@@ -1,6 +1,6 @@
 package dev.protobot.blogcustom.service.implementation;
 
-import dev.protobot.blogcustom.dto.request.SubRedditRequest;
+import dev.protobot.blogcustom.dto.SubredditDto;
 import dev.protobot.blogcustom.model.Subreddit;
 import dev.protobot.blogcustom.respository.SubredditRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,22 +23,38 @@ public class SubRedditServiceImplementation {
 
 
     @Transactional
-    public SubRedditRequest saveSubredditDto(SubRedditRequest subRedditRequest){
-        SubRedditRequest subredditDtoSaved = subredditRepository.saveSubredditDto(
-                subRedditRequest.getName(),
-                subRedditRequest.getDescription());
+    public SubredditDto saveSubredditDto(SubredditDto subredditDto){
+        SubredditDto subredditDtoSaved = subredditRepository.saveSubredditDto(
+                subredditDto.getName(),
+                subredditDto.getDescription());
         //subRedditRequest.setId(save.getId());
         return subredditDtoSaved;
     }
 
     @Transactional(readOnly = true)
-    public List<SubRedditRequest> getAllSubredditDto (){
+    public List<SubredditDto> getAllSubredditDto (){
         return subredditRepository.getAllSubredditDto();
     }
 
-    private Subreddit mapSubredditRequest(SubRedditRequest subRedditRequest) {
-        return Subreddit.builder().name(subRedditRequest.getName())
-                .description(subRedditRequest.getDescription())
+    //-------------------------------------------------------
+
+    @Transactional
+    public SubredditDto saveSubreddit(SubredditDto subredditDto){
+        SubredditDto subredditDtoSaved = subredditRepository.saveSubredditDto(
+                subredditDto.getName(),
+                subredditDto.getDescription());
+        //subRedditRequest.setId(save.getId());
+        return subredditDtoSaved;
+    }
+
+    @Transactional(readOnly = true)
+    public List<SubredditDto> getAllSubreddit (){
+        return subredditRepository.getAllSubredditDto();
+    }
+
+    private Subreddit mapSubredditRequest(SubredditDto subredditDto) {
+        return Subreddit.builder().name(subredditDto.getName())
+                .description(subredditDto.getDescription())
                 .build();
     }
 
