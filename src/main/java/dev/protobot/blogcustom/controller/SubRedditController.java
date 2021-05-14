@@ -25,14 +25,14 @@ public class SubRedditController {
 
 
     @PostMapping("/save")
-    public RestResponse<SubRedditRequest> saveSubreddit(@RequestBody SubRedditRequest subRedditRequest){
+    public RestResponse<SubRedditRequest> saveSubredditDto(@RequestBody SubRedditRequest subRedditRequest){
         SubRedditRequest subRedditRequestResponse = subRedditServiceImplementation.saveSubredditDto(subRedditRequest);
         return new RestResponse<>(HttpStatus.OK, subRedditRequestResponse);
     }
 
     @GetMapping("/getall")
-    public RestResponse<List<SubRedditRequest>> getAllSubreddit(){
-        List<SubRedditRequest> allSubredditDto = subRedditServiceImplementation.getAllSubreddit();
+    public RestResponse<List<SubRedditRequest>> getAllSubredditDto(){
+        List<SubRedditRequest> allSubredditDto = subRedditServiceImplementation.getAllSubredditDto();
         return new RestResponse<>(HttpStatus.OK, allSubredditDto);
     }
 

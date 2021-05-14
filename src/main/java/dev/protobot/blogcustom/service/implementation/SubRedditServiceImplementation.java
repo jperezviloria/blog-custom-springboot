@@ -32,7 +32,7 @@ public class SubRedditServiceImplementation {
     }
 
     @Transactional(readOnly = true)
-    public List<SubRedditRequest> getAllSubreddit (){
+    public List<SubRedditRequest> getAllSubredditDto (){
         return subredditRepository.getAllSubredditDto();
     }
 
