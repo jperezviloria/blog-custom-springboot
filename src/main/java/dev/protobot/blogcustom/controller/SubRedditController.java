@@ -51,10 +51,10 @@ public class SubRedditController {
         return new RestResponse<>(HttpStatus.OK, allSubredditDto);
     }
 
-    @GetMapping("/getall/3")
-    public RestResponse<List<Subreddit>> getAllSubreddit2(){
-        List<Subreddit> allSubreddit = subRedditServiceImplementation.getAllSubreddit2();
-        return new RestResponse<>(HttpStatus.OK, allSubreddit);
+    @GetMapping("/{id}")
+    public RestResponse<SubredditDto> getSubredditById(@PathVariable Long id){
+        SubredditDto subredditDto = subRedditServiceImplementation.getSubredditById(id);
+        return new RestResponse<>(HttpStatus.OK, subredditDto);
     }
 
 }

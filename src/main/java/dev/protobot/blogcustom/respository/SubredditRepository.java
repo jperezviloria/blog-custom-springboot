@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SubredditRepository extends JpaRepository<Subreddit,Long> {
@@ -46,4 +47,14 @@ String queryGetAllSubreddit =
         "SELECT * FROM Subreddit2  ;";
     @Query(value = queryGetAllSubreddit, nativeQuery = true)
     List<Subreddit> getAllSubreddit();
+
+
+    String queryGetSubredditById = "SELECT * FROM Subreddit2 WHERE id = :id ";
+    @Query(value = queryGetSubredditById, nativeQuery = true)
+    Optional<Subreddit> getSubredditById(
+            @Param("id") Long id
+    );
 }
+
+
+

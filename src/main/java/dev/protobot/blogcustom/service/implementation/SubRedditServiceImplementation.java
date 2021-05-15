@@ -1,6 +1,7 @@
 package dev.protobot.blogcustom.service.implementation;
 
 import dev.protobot.blogcustom.dto.SubredditDto;
+import dev.protobot.blogcustom.exceptions.SpringRedditException;
 import dev.protobot.blogcustom.mapper.SubredditMapper;
 import dev.protobot.blogcustom.model.Subreddit;
 import dev.protobot.blogcustom.respository.SubredditRepository;
@@ -65,13 +66,12 @@ public class SubRedditServiceImplementation {
         return allStudents;
     }
 
-    @Transactional(readOnly = true)
-    public List<Subreddit> getAllSubreddit2 (){
-        List<Subreddit> allStudents = subredditRepository.getAllSubreddit();
+    public SubredditDto getSubredditById(Long id){
+        Subreddit subredditOptional = subredditRepository.getSubredditById(id)
+                .orElseThrow(() -> new SpringRedditException("Not subreddit found with this id"));
+        return subredditMapper.mapSubredditToDto(subredditOptional);
 
-        return allStudents;
+
     }
-
-
 
 }
