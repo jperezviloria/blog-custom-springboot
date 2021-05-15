@@ -14,17 +14,21 @@ import java.time.Instant;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "post2")
 public class Post {
 
     @Id
+    @Column(name = "id")
     private Long postId;
 
+    @Column(name = "postname")
     private String postName;
 
     private String url;
 
     private String description;
 
+    @Column(name = "votecount")
     private Integer voteCount = 0;
 
     //Join referenced column -> userid
@@ -32,11 +36,12 @@ public class Post {
     @JoinColumn(name = "userid", referencedColumnName = "userid")
     private User user;
 
+    @Column(name = "createddate")
     private Instant createdDate;
 
     //Join referenced column -> id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id" , referencedColumnName = "id")
+    @JoinColumn(name = "idsubreddit" , referencedColumnName = "id")
     private Subreddit subreddit;
 
 }

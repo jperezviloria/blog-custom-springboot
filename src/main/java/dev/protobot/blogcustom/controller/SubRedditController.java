@@ -2,6 +2,7 @@ package dev.protobot.blogcustom.controller;
 
 import dev.protobot.blogcustom.dto.SubredditDto;
 import dev.protobot.blogcustom.dto.response.RestResponse;
+import dev.protobot.blogcustom.model.Subreddit;
 import dev.protobot.blogcustom.service.implementation.SubRedditServiceImplementation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +41,20 @@ public class SubRedditController {
 
     @PostMapping("/save/2")
     public RestResponse<SubredditDto> saveSubreddit(@RequestBody SubredditDto subredditDto){
-        SubredditDto subredditDtoResponse = subRedditServiceImplementation.saveSubredditDto(subredditDto);
+        SubredditDto subredditDtoResponse = subRedditServiceImplementation.saveSubreddit(subredditDto);
         return new RestResponse<>(HttpStatus.OK, subredditDtoResponse);
     }
 
     @GetMapping("/getall/2")
     public RestResponse<List<SubredditDto>> getAllSubreddit(){
-        List<SubredditDto> allSubredditDto = subRedditServiceImplementation.getAllSubredditDto();
+        List<SubredditDto> allSubredditDto = subRedditServiceImplementation.getAllSubreddit();
         return new RestResponse<>(HttpStatus.OK, allSubredditDto);
+    }
+
+    @GetMapping("/getall/3")
+    public RestResponse<List<Subreddit>> getAllSubreddit2(){
+        List<Subreddit> allSubreddit = subRedditServiceImplementation.getAllSubreddit2();
+        return new RestResponse<>(HttpStatus.OK, allSubreddit);
     }
 
 }

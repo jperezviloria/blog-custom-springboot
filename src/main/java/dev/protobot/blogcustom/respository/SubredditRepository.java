@@ -10,9 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SubredditRepository extends JpaRepository<SubredditDto,Long> {
-
-
+public interface SubredditRepository extends JpaRepository<Subreddit,Long> {
 
 
     String querySaveSubredditDto =
@@ -42,8 +40,10 @@ public interface SubredditRepository extends JpaRepository<SubredditDto,Long> {
     );
 
 
-    String queryGetAllSubreddit =
-            "SELECT * FROM Subreddit2 ;";
+//    String queryGetAllSubreddit =
+//            "SELECT s.id, s.name, s.description, p.id FROM Subreddit2 as s JOIN Post2 as p ON p.id = s.id  ;";
+String queryGetAllSubreddit =
+        "SELECT * FROM Subreddit2  ;";
     @Query(value = queryGetAllSubreddit, nativeQuery = true)
     List<Subreddit> getAllSubreddit();
 }
