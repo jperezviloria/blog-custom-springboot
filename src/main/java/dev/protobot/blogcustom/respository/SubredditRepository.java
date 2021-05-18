@@ -14,23 +14,6 @@ import java.util.Optional;
 public interface SubredditRepository extends JpaRepository<Subreddit,Long> {
 
 
-    String querySaveSubredditDto =
-            "INSERT INTO SubredditDto (name, description) " +
-                    "VALUES( :name, :description) RETURNING *;";
-    @Query(value = querySaveSubredditDto, nativeQuery = true)
-    SubredditDto saveSubredditDto(
-            @Param("name") String username,
-            @Param("description") String password
-    );
-
-
-    String queryGetAllSubredditDto =
-            "SELECT * FROM SubredditDto ;";
-    @Query(value = queryGetAllSubredditDto, nativeQuery = true)
-    List<SubredditDto> getAllSubredditDto();
-
-    //-------------------------------------------------------------------------
-
     String querySaveSubreddit =
             "INSERT INTO Subreddit2 (name, description) " +
                     "VALUES( :name, :description) RETURNING *;";
@@ -53,6 +36,12 @@ String queryGetAllSubreddit =
     @Query(value = queryGetSubredditById, nativeQuery = true)
     Optional<Subreddit> getSubredditById(
             @Param("id") Long id
+    );
+
+    String queryGetSubredditByName = "SELECT * FROM Subreddit2 WHERE name = :name ";
+    @Query(value = queryGetSubredditByName, nativeQuery = true)
+    Optional<Subreddit> getSubredditByName(
+            @Param("name") String name
     );
 }
 

@@ -2,6 +2,7 @@ package dev.protobot.blogcustom.service.implementation;
 
 import dev.protobot.blogcustom.dto.SubredditDto;
 import dev.protobot.blogcustom.exceptions.SpringRedditException;
+import dev.protobot.blogcustom.exceptions.SubredditNotFoundException;
 import dev.protobot.blogcustom.mapper.SubredditMapper;
 import dev.protobot.blogcustom.model.Subreddit;
 import dev.protobot.blogcustom.respository.SubredditRepository;
@@ -28,23 +29,6 @@ public class SubRedditServiceImplementation {
         this.subredditMapper = subredditMapper;
     }
 
-
-    @Transactional
-    public SubredditDto saveSubredditDto(SubredditDto subredditDto){
-        SubredditDto subredditDtoSaved = subredditRepository.saveSubredditDto(
-                subredditDto.getName(),
-                subredditDto.getDescription());
-        //subRedditRequest.setId(save.getId());
-        return subredditDtoSaved;
-    }
-
-    @Transactional(readOnly = true)
-    public List<SubredditDto> getAllSubredditDto (){
-        return subredditRepository.getAllSubredditDto();
-    }
-
-    //-------------------------------------------------------
-
     @Transactional
     public SubredditDto saveSubreddit(SubredditDto subredditDto){
         Subreddit subredditMapped = subredditMapper.mapDtoToSubreddit(subredditDto);
@@ -68,7 +52,7 @@ public class SubRedditServiceImplementation {
 
     public SubredditDto getSubredditById(Long id){
         Subreddit subredditOptional = subredditRepository.getSubredditById(id)
-                .orElseThrow(() -> new SpringRedditException("Not subreddit found with this id"));
+                .orElseThrow(() -> new SubredditNotFoundException("Not subreddit found with this id"));
         return subredditMapper.mapSubredditToDto(subredditOptional);
 
 
