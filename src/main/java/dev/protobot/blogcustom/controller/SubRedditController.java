@@ -1,6 +1,6 @@
 package dev.protobot.blogcustom.controller;
 
-import dev.protobot.blogcustom.dto.request.SubRedditRequest;
+import dev.protobot.blogcustom.dto.SubredditDto;
 import dev.protobot.blogcustom.dto.response.RestResponse;
 import dev.protobot.blogcustom.model.Subreddit;
 import dev.protobot.blogcustom.service.implementation.SubRedditServiceImplementation;
@@ -24,16 +24,22 @@ public class SubRedditController {
     }
 
 
-    @PostMapping("/save")
-    public RestResponse<SubRedditRequest> saveSubredditDto(@RequestBody SubRedditRequest subRedditRequest){
-        SubRedditRequest subRedditRequestResponse = subRedditServiceImplementation.saveSubredditDto(subRedditRequest);
-        return new RestResponse<>(HttpStatus.OK, subRedditRequestResponse);
+    @PostMapping("/save/2")
+    public RestResponse<SubredditDto> saveSubreddit(@RequestBody SubredditDto subredditDto){
+        SubredditDto subredditDtoResponse = subRedditServiceImplementation.saveSubreddit(subredditDto);
+        return new RestResponse<>(HttpStatus.OK, subredditDtoResponse);
     }
 
-    @GetMapping("/getall")
-    public RestResponse<List<SubRedditRequest>> getAllSubredditDto(){
-        List<SubRedditRequest> allSubredditDto = subRedditServiceImplementation.getAllSubredditDto();
+    @GetMapping("/getall/2")
+    public RestResponse<List<SubredditDto>> getAllSubreddit(){
+        List<SubredditDto> allSubredditDto = subRedditServiceImplementation.getAllSubreddit();
         return new RestResponse<>(HttpStatus.OK, allSubredditDto);
+    }
+
+    @GetMapping("/{id}")
+    public RestResponse<SubredditDto> getSubredditById(@PathVariable Long id){
+        SubredditDto subredditDto = subRedditServiceImplementation.getSubredditById(id);
+        return new RestResponse<>(HttpStatus.OK, subredditDto);
     }
 
 }

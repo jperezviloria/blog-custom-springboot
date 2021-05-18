@@ -7,49 +7,30 @@ import java.time.Instant;
 import java.util.List;
 
 @Entity
+@Data
 @Builder
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "subreddit2")
 public class Subreddit {
 
     @Id
+    @Column(name = "id")
     private Long id;
 
     private String name;
 
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", referencedColumnName = "id")
     private List<Post> posts;
 
+    @Column(name = "createddate")
     private Instant createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "iduser")
     private User user;
-
-    /*
-    public Subreddit(){}
-
-    public Subreddit(Long id, String name, String description, List<Post> posts, Instant createdDate, User user) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.posts = posts;
-        this.createdDate = createdDate;
-        this.user = user;
-    }
-
-    public Subreddit(String name, String description, List<Post> posts, Instant createdDate, User user) {
-        this.name = name;
-        this.description = description;
-        this.posts = posts;
-        this.createdDate = createdDate;
-        this.user = user;
-    }
-
-
-     */
 
 }

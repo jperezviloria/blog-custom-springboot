@@ -79,6 +79,15 @@ public class JwtProvider {
         return true;
     }
 
+    public String generateTokenWithUserName(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(from(Instant.now()))
+                .signWith(getPrivateKey())
+                .setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationInMillis)))
+                .compact();
+    }
+
 
     private PublicKey getPublickey() {
         try {
@@ -96,6 +105,10 @@ public class JwtProvider {
                 .getBody();
 
         return claims.getSubject();
+    }
+
+    public Long getJwtExpirationInMillis() {
+        return jwtExpirationInMillis;
     }
     /*
     =====================================================================================================
